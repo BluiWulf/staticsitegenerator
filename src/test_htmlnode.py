@@ -27,6 +27,5 @@ class TestHTMLNode(unittest.TestCase):
         node1 = HTMLNode("h1", "This is the header", [node2, node3], node_props)
         self.assertEqual(node1.props_to_html(), expected)
 
-
 if __name__ == "__main__":
     unittest.main()

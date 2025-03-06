@@ -4,6 +4,8 @@ from leafnode import LeafNode
 from parentnode import ParentNode
 from parser import *
 
+import re
+
 def main():
     node_props = {
         "href": "https://lycanwaredevelopments.org",
@@ -35,6 +37,8 @@ def main():
     print(split_nodes_delimiter([TextNode("This is a **bold text** node", TextType.NORMAL_TEXT)], "**", TextType.BOLD_TEXT))
     print(extract_markdown_images('This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)'))
     print(extract_markdown_links('This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)'))
+    print(split_nodes_image([TextNode('This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)', TextType.NORMAL_TEXT)]))
+    print(split_nodes_link([TextNode('This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)', TextType.NORMAL_TEXT)]))
 
 if __name__ == "__main__":
     main()

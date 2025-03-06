@@ -2,7 +2,7 @@ from textnode import TextNode, TextType
 from htmlnode import HTMLNode
 from leafnode import LeafNode
 from parentnode import ParentNode
-from parser import split_nodes_delimiter
+from parser import *
 
 def main():
     node_props = {
@@ -32,9 +32,9 @@ def main():
     print(f"{leaf_node.to_html()}\n")
     print(f"{parent_node.to_html()}\n")
 
-    new_nodes = split_nodes_delimiter([TextNode("This is a **bold text** node", TextType.NORMAL_TEXT)], "**", TextType.BOLD_TEXT)
-
-    print(new_nodes)
+    print(split_nodes_delimiter([TextNode("This is a **bold text** node", TextType.NORMAL_TEXT)], "**", TextType.BOLD_TEXT))
+    print(extract_markdown_images('This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)'))
+    print(extract_markdown_links('This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)'))
 
 if __name__ == "__main__":
     main()

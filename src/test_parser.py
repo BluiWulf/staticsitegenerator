@@ -1,7 +1,7 @@
 import unittest
 
 from textnode import TextNode, TextType
-from parser import split_nodes_delimiter
+from parser import *
 
 class TestParser(unittest.TestCase):
     def test_split1(self):
@@ -52,6 +52,98 @@ class TestParser(unittest.TestCase):
             split_nodes_delimiter(old_nodes, "**", TextType.BOLD_TEXT)
         except Exception as e:
             self.assertEqual(str(e), expected)
+
+    def test_image1(self):
+        expected = [("One Punch Man", "https://tenor.com/ZyW9.gif")]
+
+        markdown = "Have you seen ![One Punch Man](https://tenor.com/ZyW9.gif)?"
+        images = extract_markdown_images(markdown)
+        self.assertEqual(images, expected)
+
+    def test_image2(self):
+        expected = [("Solo Leveling", "https://tenor.com/cDopMbQJecV.gif"), ("Freiren", "https://tenor.com/lHwR5fhFMXX.gif")]
+
+        markdown = "Two great animes are ![Solo Leveling](https://tenor.com/cDopMbQJecV.gif) and ![Freiren](https://tenor.com/lHwR5fhFMXX.gif)"
+        images = extract_markdown_images(markdown)
+        self.assertEqual(images, expected)
+
+    def test_image3(self):
+        expected = [
+            ("Attack on Titan", "https://tenor.com/eKHRRoHDbqL.gif"),
+            ("Dandadan", "https://tenor.com/nZqs80XWAHz.gif"),
+            ("Chainsaw Man", "https://tenor.com/rv4ARHFlTtF.gif"),
+            ("Demon Slayer", "https://tenor.com/ilMT2WIMnnA.gif"),
+            ("Fire Force", "https://tenor.com/bVDBb.gif")
+        ]
+
+        markdown = str("Some of my recent favorite animes are" +
+                       "![Attack on Titan](https://tenor.com/eKHRRoHDbqL.gif), " +
+                       "![Dandadan](https://tenor.com/nZqs80XWAHz.gif), " +
+                       "![Chainsaw Man](https://tenor.com/rv4ARHFlTtF.gif), " +
+                       "![Demon Slayer](https://tenor.com/ilMT2WIMnnA.gif) and " +
+                       "![Fire Force](https://tenor.com/bVDBb.gif)")
+        images = extract_markdown_images(markdown)
+        self.assertEqual(images, expected)
+
+    def test_image4(self):
+        expected = []
+
+        markdown = "Is (https://tenor.com/twPO9rwLM1h.gif) a valid image?"
+        images = extract_markdown_images(markdown)
+        self.assertEqual(images, expected)
+
+    def test_image5(self):
+        expected = []
+
+        markdown = "Is ![Full Metal Alchemist] a valid image?"
+        images = extract_markdown_images(markdown)
+        self.assertEqual(images, expected)
+
+    def test_link1(self):
+        expected = [("One Punch Man", "https://tenor.com/ZyW9.gif")]
+
+        markdown = "Have you seen [One Punch Man](https://tenor.com/ZyW9.gif)?"
+        images = extract_markdown_links(markdown)
+        self.assertEqual(images, expected)
+
+    def test_link2(self):
+        expected = [("Solo Leveling", "https://tenor.com/cDopMbQJecV.gif"), ("Freiren", "https://tenor.com/lHwR5fhFMXX.gif")]
+
+        markdown = "Two great animes are [Solo Leveling](https://tenor.com/cDopMbQJecV.gif) and [Freiren](https://tenor.com/lHwR5fhFMXX.gif)"
+        images = extract_markdown_links(markdown)
+        self.assertEqual(images, expected)
+
+    def test_link3(self):
+        expected = [
+            ("Attack on Titan", "https://tenor.com/eKHRRoHDbqL.gif"),
+            ("Dandadan", "https://tenor.com/nZqs80XWAHz.gif"),
+            ("Chainsaw Man", "https://tenor.com/rv4ARHFlTtF.gif"),
+            ("Demon Slayer", "https://tenor.com/ilMT2WIMnnA.gif"),
+            ("Fire Force", "https://tenor.com/bVDBb.gif")
+        ]
+
+        markdown = str("Some of my recent favorite animes are" +
+                       "[Attack on Titan](https://tenor.com/eKHRRoHDbqL.gif), " +
+                       "[Dandadan](https://tenor.com/nZqs80XWAHz.gif), " +
+                       "[Chainsaw Man](https://tenor.com/rv4ARHFlTtF.gif), " +
+                       "[Demon Slayer](https://tenor.com/ilMT2WIMnnA.gif) and " +
+                       "[Fire Force](https://tenor.com/bVDBb.gif)")
+        images = extract_markdown_links(markdown)
+        self.assertEqual(images, expected)
+
+    def test_link4(self):
+        expected = []
+
+        markdown = "Is (https://tenor.com/twPO9rwLM1h.gif) a valid image?"
+        images = extract_markdown_links(markdown)
+        self.assertEqual(images, expected)
+
+    def test_link5(self):
+        expected = []
+
+        markdown = "Is [Full Metal Alchemist] a valid image?"
+        images = extract_markdown_links(markdown)
+        self.assertEqual(images, expected)
 
 if __name__ == "__main__":
     unittest.main()

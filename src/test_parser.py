@@ -1,7 +1,7 @@
 import unittest
 
 from textnode import TextNode, TextType
-from parser import *
+from inline_parser import *
 
 class TestParser(unittest.TestCase):
     def test_split1(self):

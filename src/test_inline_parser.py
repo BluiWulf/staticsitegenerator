@@ -3,7 +3,7 @@ import unittest
 from textnode import TextNode, TextType
 from inline_parser import *
 
-class TestParser(unittest.TestCase):
+class TestInlineParser(unittest.TestCase):
     def test_split1(self):
         expected = [TextNode("This is a normal text node", TextType.CODE_TEXT)]
 

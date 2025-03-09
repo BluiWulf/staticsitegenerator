@@ -3,10 +3,12 @@ from htmlnode import HTMLNode
 from leafnode import LeafNode
 from parentnode import ParentNode
 from inline_parser import *
+from block_parser import *
 
 import re
 
 def main():
+    # This section is being used for very quick unit testing before creating addition tests
     node_props = {
         "href": "https://lycanwaredevelopments.org",
         "align": "center",
@@ -46,6 +48,17 @@ def main():
     print("\n")
     for node in test_nodes:
         print(f"{node}")
+
+    markdown = str("Anime is really `fun to watch` and some of my recent\n" +
+                   "_favorite animes_ are listed below:\n\n\n\n" +
+                   "\n\n" +
+                   "-![Attack on Titan](https://tenor.com/eKHRRoHDbqL.gif)\n" +
+                   "-![Dandadan](https://tenor.com/nZqs80XWAHz.gif)\n" +
+                   "-![Demon Slayer](https://tenor.com/ilMT2WIMnnA.gif)\n\n\n\n" +
+                   "\n\n" +
+                   "These are all very **fantastic** with a lot of _great stories_\n")
+    
+    print(markdown_to_blocks(markdown))
 
 if __name__ == "__main__":
     main()

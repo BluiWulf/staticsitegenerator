@@ -40,5 +40,12 @@ def main():
     print(split_nodes_image([TextNode('This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)', TextType.NORMAL_TEXT)]))
     print(split_nodes_link([TextNode('This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)', TextType.NORMAL_TEXT)]))
 
+    text = "This is **text** with an _italic_ word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
+    test_nodes = text_to_textnodes(text)
+
+    print("\n")
+    for node in test_nodes:
+        print(f"{node}")
+
 if __name__ == "__main__":
     main()

@@ -74,7 +74,7 @@ def split_nodes_link(old_nodes):
 
 def text_to_textnodes(text):
     new_nodes = []
-    old_node = TextNode(text, TextType.NORMAL_TEXT)
+    old_node = [TextNode(text, TextType.NORMAL_TEXT)]
 
     new_nodes = split_nodes_image(old_node)
     new_nodes = split_nodes_link(new_nodes)

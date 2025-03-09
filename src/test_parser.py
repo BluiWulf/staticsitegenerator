@@ -271,5 +271,70 @@ class TestParser(unittest.TestCase):
         new_nodes = split_nodes_link(old_nodes)
         self.assertEqual(new_nodes, expected)
 
+    def test_full_split1(self):
+        expected = [
+            TextNode("Anime is really ", TextType.NORMAL_TEXT),
+            TextNode("fun to watch", TextType.BOLD_TEXT),
+            TextNode(" and some of my recent ", TextType.NORMAL_TEXT),
+            TextNode("favorite animes", TextType.ITALIC_TEXT),
+            TextNode(" are ", TextType.NORMAL_TEXT),
+            TextNode("Attack on Titan", TextType.LINK_TEXT, "https://tenor.com/eKHRRoHDbqL.gif"),
+            TextNode(", ", TextType.NORMAL_TEXT),
+            TextNode("Dandadan", TextType.IMAGE_TEXT, "https://tenor.com/nZqs80XWAHz.gif"),
+            TextNode(" and ", TextType.NORMAL_TEXT),
+            TextNode("Demon Slayer", TextType.LINK_TEXT, "https://tenor.com/ilMT2WIMnnA.gif"),
+            TextNode(".  These are all very ", TextType.NORMAL_TEXT),
+            TextNode("fantastic", TextType.CODE_TEXT),
+            TextNode(" with a lot of ", TextType.NORMAL_TEXT),
+            TextNode("great stories", TextType.CODE_TEXT),
+            TextNode(".", TextType.NORMAL_TEXT)
+        ]
+        markdown = str("Anime is really **fun to watch** and some of my recent " +
+                       "_favorite animes_ are [Attack on Titan](https://tenor.com/eKHRRoHDbqL.gif), " +
+                       "![Dandadan](https://tenor.com/nZqs80XWAHz.gif) and " +
+                       "[Demon Slayer](https://tenor.com/ilMT2WIMnnA.gif).  " +
+                       "These are all very `fantastic` with a lot of `great stories`.")
+
+        new_nodes = text_to_textnodes(markdown)
+        self.assertEqual(new_nodes, expected)
+
+    def test_full_split2(self):
+        expected = [
+            TextNode("Anime is really ", TextType.NORMAL_TEXT),
+            TextNode("fun to watch", TextType.CODE_TEXT),
+            TextNode(" and some of my recent ", TextType.NORMAL_TEXT),
+            TextNode("favorite animes", TextType.ITALIC_TEXT),
+            TextNode(" are ", TextType.NORMAL_TEXT),
+            TextNode("Attack on Titan", TextType.IMAGE_TEXT, "https://tenor.com/eKHRRoHDbqL.gif"),
+            TextNode(", ", TextType.NORMAL_TEXT),
+            TextNode("Dandadan", TextType.LINK_TEXT, "https://tenor.com/nZqs80XWAHz.gif"),
+            TextNode(" and ", TextType.NORMAL_TEXT),
+            TextNode("Demon Slayer", TextType.IMAGE_TEXT, "https://tenor.com/ilMT2WIMnnA.gif"),
+            TextNode(".  These are all very ", TextType.NORMAL_TEXT),
+            TextNode("fantastic", TextType.BOLD_TEXT),
+            TextNode(" with a lot of ", TextType.NORMAL_TEXT),
+            TextNode("great stories", TextType.ITALIC_TEXT),
+            TextNode(".", TextType.NORMAL_TEXT)
+        ]
+        markdown = str("Anime is really `fun to watch` and some of my recent " +
+                       "_favorite animes_ are ![Attack on Titan](https://tenor.com/eKHRRoHDbqL.gif), " +
+                       "[Dandadan](https://tenor.com/nZqs80XWAHz.gif) and " +
+                       "![Demon Slayer](https://tenor.com/ilMT2WIMnnA.gif).  " +
+                       "These are all very **fantastic** with a lot of _great stories_.")
+
+        new_nodes = text_to_textnodes(markdown)
+        self.assertEqual(new_nodes, expected)
+
+    def test_full_split3(self):
+        markdown = str("Anime is really fun to watch and some of my recent " +
+                       "favorite animes are Attack on Titan(https://tenor.com/eKHRRoHDbqL.gif), " +
+                       "Dandadan(https://tenor.com/nZqs80XWAHz.gif) and " +
+                       "Demon Slayer(https://tenor.com/ilMT2WIMnnA.gif).  " +
+                       "These are all very fantastic with a lot of great stories.")
+        expected = [TextNode(markdown, TextType.NORMAL_TEXT)]
+
+        new_nodes = text_to_textnodes(markdown)
+        self.assertEqual(new_nodes, expected)
+
 if __name__ == "__main__":
     unittest.main()

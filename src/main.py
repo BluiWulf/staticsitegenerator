@@ -59,6 +59,11 @@ def main():
                    "These are all very **fantastic** with a lot of _great stories_\n")
     
     print(markdown_to_blocks(markdown))
+    print(block_to_block_type("###### This is a test header"))
+    print(block_to_block_type("```\nThis is a code block\nwith multiple lines\n```"))
+    print(block_to_block_type(">This is a quote line\n>This is a second quote line"))
+    print(block_to_block_type("- This is an unordered list item\n- This is another list item\n- This is another list item"))
+    print(block_to_block_type("1. This is an unordered list item\n2. This is another list item"))
 
 if __name__ == "__main__":
     main()

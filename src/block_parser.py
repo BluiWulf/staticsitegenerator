@@ -28,12 +28,6 @@ def block_to_block_type(block):
         return BlockType.CODE
     if len(extract_markdown_quote(block)) == len(block.split("\n")):
         return BlockType.QUOTE
-    
-    #unordered = block.split("\n")
-    #for item in unordered:
-    #    if len(extract_markdown_unordered_list(item)) == 0:
-    #        return BlockType.PARAGRAPH
-
     if len(extract_markdown_unordered_list(block)) == len(block.split("\n")):
         return BlockType.UNORDERED_LIST
     

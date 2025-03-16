@@ -4,6 +4,7 @@ from leafnode import LeafNode
 from parentnode import ParentNode
 from inline_parser import *
 from block_parser import *
+from converter import *
 
 import re
 
@@ -64,6 +65,10 @@ def main():
     print(block_to_block_type(">This is a quote line\n>This is a second quote line"))
     print(block_to_block_type("- This is an unordered list item\n- This is another list item\n- This is another list item"))
     print(block_to_block_type("1. This is an unordered list item\n2. This is another list item"))
+
+    # Debug
+    print("\n")    
+    print(markdown_to_html_node("###### This is a test header"))
 
 if __name__ == "__main__":
     main()

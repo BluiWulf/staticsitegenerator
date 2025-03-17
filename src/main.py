@@ -78,5 +78,11 @@ def main():
     html_test_node = markdown_to_html_node(code_md)
     print(html_test_node.to_html())
 
+    print()
+    quote_md = str(">This is a _quote_ block\n" +
+                   ">This should have **inline** formatting")
+    html_test_node = markdown_to_html_node(quote_md)
+    print(html_test_node.to_html())
+
 if __name__ == "__main__":
     main()

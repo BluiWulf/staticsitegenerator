@@ -22,7 +22,9 @@ def markdown_to_html_node(markdown):
                 children = text_to_children(code, True)
                 html_nodes.append(ParentNode("pre", children))
             case BlockType.QUOTE:
-                pass
+                quote = block.replace(">", "")
+                children = text_to_children(quote)
+                html_nodes.append(ParentNode("blockquote", children))
             case BlockType.UNORDERED_LIST:
                 pass
             case BlockType.ORDERED_LIST:

@@ -66,9 +66,17 @@ def main():
     print(block_to_block_type("- This is an unordered list item\n- This is another list item\n- This is another list item"))
     print(block_to_block_type("1. This is an unordered list item\n2. This is another list item"))
 
-    # Debug
-    print("\n")    
-    print(markdown_to_html_node("###### This is a test header"))
+    print()
+    html_test_node = markdown_to_html_node("###### This is a **test** header")
+    print(html_test_node.to_html())
+
+    print()
+    code_md = str("```\n" +
+                  "This is a **code** block\n" +
+                  "This should have no _inline_ formatting\n" +
+                  "```")
+    html_test_node = markdown_to_html_node(code_md)
+    print(html_test_node.to_html())
 
 if __name__ == "__main__":
     main()

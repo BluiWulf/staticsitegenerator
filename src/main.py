@@ -84,5 +84,25 @@ def main():
     html_test_node = markdown_to_html_node(quote_md)
     print(html_test_node.to_html())
 
+    print()
+    ul_md = str("- This is the first _list_ item\n" +
+                "- This is the second **list** item\n" +
+                "- This is the third `list` item")
+    html_test_node = markdown_to_html_node(ul_md)
+    print(html_test_node.to_html())
+
+    print()
+    ol_md = str("1. This is the first _list_ item\n" +
+                "2. This is the second **list** item\n" +
+                "3. This is the third `list` item")
+    html_test_node = markdown_to_html_node(ol_md)
+    print(html_test_node.to_html())
+
+    print()
+    pg_md = str("This is just a simple _paragraph_ with some\n" +
+                "additional **formatting** added in.")
+    html_test_node = markdown_to_html_node(pg_md)
+    print(html_test_node.to_html())
+
 if __name__ == "__main__":
     main()

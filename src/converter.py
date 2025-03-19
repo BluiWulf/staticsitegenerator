@@ -18,24 +18,30 @@ def markdown_to_html_node(markdown):
                 children = text_to_children(block[block.index(" ") + 1:])
                 html_nodes.append(ParentNode(f"h{len(block[:block.index(" ")])}", children))
             case BlockType.CODE:
-                code = block[block.index("```\n") + 4:block.index("\n```")]
+                code_match = re.search(r"```\s*(.*?)\s*```", block, re.DOTALL)
+                if code_match:
+                    code = code_match.group(1).strip("\n")
                 children = text_to_children(code, True)
                 html_nodes.append(ParentNode("pre", children))
             case BlockType.QUOTE:
-                quote = block.replace(">", "")
+                quote = re.sub(r"\n>\s*", "\n", block[1:].lstrip())
                 children = text_to_children(quote)
                 html_nodes.append(ParentNode("blockquote", children))
             case BlockType.UNORDERED_LIST:
                 items = block.split("\n")
-                items = list(map(lambda text: f"<li>{text.replace("- ", "")}</li>", items))
-                ulist = "\n".join(items)
-                children = text_to_children(ulist.replace("\n", ""))
+                items = list(map(lambda text: re.sub(r"-\s*", "", text), items))
+                children = []
+                for item in items:
+                    granchildren = text_to_children(item)
+                    children.append(ParentNode("li", granchildren))
                 html_nodes.append(ParentNode("ul", children))
             case BlockType.ORDERED_LIST:
                 items = block.split("\n")
-                items = list(map(lambda text: f"<li>{text[text.index(" ") + 1:]}</li>", items))
-                olist = "\n".join(items)
-                children = text_to_children(olist.replace("\n", ""))
+                items = list(map(lambda text: re.sub(r"\d+\.\s*", "", text), items))
+                children = []
+                for item in items:
+                    granchildren = text_to_children(item)
+                    children.append(ParentNode("li", granchildren))
                 html_nodes.append(ParentNode("ol", children))
             case BlockType.PARAGRAPH:
                 children = text_to_children(block)

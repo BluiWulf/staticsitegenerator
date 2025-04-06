@@ -46,7 +46,7 @@ def block_to_block_type(block):
 # Helper Functions
 
 def extract_markdown_headers(text):
-    return re.findall(r"^(#{,6})\s(.*)", text)
+    return re.findall(r"^(#{1,6})\s(.*)", text, re.MULTILINE)
 
 def extract_markdown_code(text):
     return re.findall(r"(```)(\s*.*\s*)(```)", text, re.DOTALL)

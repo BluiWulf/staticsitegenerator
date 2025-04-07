@@ -1,8 +1,6 @@
 import re
 
 from textnode import *
-from htmlnode import HTMLNode
-from leafnode import LeafNode
 from parentnode import ParentNode
 from inline_parser import *
 from block_parser import *
@@ -24,7 +22,12 @@ def markdown_to_html_node(markdown):
                 children = text_to_children(code, True)
                 html_nodes.append(ParentNode("pre", children))
             case BlockType.QUOTE:
-                quote = re.sub(r"\n>\s*", "\n", block[1:].lstrip())
+                lines = [line.lstrip() for line in re.findall(r"^>(.*)", block, re.MULTILINE)]
+                quote = "\n".join(lines)
+
+                # Replace newlines w/ <br> for paragraph breaks
+                quote = quote.replace("\n", "<br>")
+
                 children = text_to_children(quote)
                 html_nodes.append(ParentNode("blockquote", children))
             case BlockType.UNORDERED_LIST:

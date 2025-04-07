@@ -2,6 +2,7 @@ import os
 import shutil
 
 from block_parser import *
+from converter import markdown_to_html_node
 
 def copy_static(base_path = ""):
     contents = []
@@ -32,3 +33,24 @@ def extract_title(markdown):
         if header[0] == "#":
             return header[1]
     raise Exception("A title (h1 header) is required")
+
+def generate_page(from_path, template_path, dest_path):
+    print(f"Generating html page from {from_path} to {dest_path} using {template_path}")
+
+    input_md = open(from_path, 'r')
+    markdown = input_md.read()
+    input_md.close()
+
+    template_file = open(template_path, 'r')
+    template = template_file.read()
+    template_file.close()
+
+    html = markdown_to_html_node(markdown).to_html()
+    title = extract_title(markdown)
+    new_page = template.replace("{{ Title }}", title).replace("{{ Content }}", html)
+
+    if not os.path.exists(os.path.join(os.path.dirname(dest_path))):
+        os.makedirs(os.path.join(os.path.dirname(dest_path)), exist_ok = True)
+    output_html = open(dest_path, 'w')
+    output_html.write(new_page)
+    output_html.close()
